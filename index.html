@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAPAC</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 90%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #7289da;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #677bc4;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            max-width: 80%;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="PAPAC.gif" alt="PAPAC" style="max-width: 100%; border-radius: 10px;">
+        <h1>PAPAC</h1>
+        <p>All in One (Kinda) Bot for Discord!</p>
+        <a class="btn" id="btn-invite">Invite Bot</a>
+        <div class="popup" id="popup-invite">
+            <a href="https://discord.com/oauth2/authorize?client_id=1219597765089300540&permissions=8&scope=bot" class="btn">PAPAC Experiences</a>
+            <a href="discord.html" class="btn">PAPAC Premium</a>
+            <a href="https://discord.com/oauth2/authorize?client_id=1205922507077591070&permissions=8&scope=bot" class="btn">PAPAC Demo</a>
+        </div>
+        <a class="btn" id="btn-terms">Terms of Service</a>
+        <div class="popup" id="popup-terms">
+            <iframe id="terms-frame" src="" frameborder="0"></iframe>
+        </div>
+        <a href="feat.html" class="btn">Features</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnInvite = document.getElementById('btn-invite');
+            const popupInvite = document.getElementById('popup-invite');
+            const btnTerms = document.getElementById('btn-terms');
+            const popupTerms = document.getElementById('popup-terms');
+            const termsFrame = document.getElementById('terms-frame');
+
+            if (window.location.hash === '#bots') {
+                popupInvite.classList.add('active');
+            } else if (window.location.hash === '#terms') {
+                popupTerms.classList.add('active');
+            }
+
+            btnInvite.addEventListener('click', () => {
+                popupInvite.classList.toggle('active');
+            });
+
+            btnTerms.addEventListener('click', () => {
+                popupTerms.classList.toggle('active');
+                if (popupTerms.classList.contains('active')) {
+                    termsFrame.src = 'terms.html';
+                } else {
+                    termsFrame.src = '';
+                }
+            });
+
+            window.addEventListener('click', (e) => {
+                if (!btnInvite.contains(e.target) && !popupInvite.contains(e.target)) {
+                    popupInvite.classList.remove('active');
+                }
+                if (!btnTerms.contains(e.target) && !popupTerms.contains(e.target)) {
+                    popupTerms.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
