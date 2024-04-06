@@ -94,7 +94,7 @@
             <iframe id="terms-frame" src="" frameborder="0"></iframe>
         </div>
         <a href="feat.html" class="btn">Features</a>
-        <p>Currently in <span id="serversCount">??</span> servers..</p>
+        <p>Currently in <span id="serversCount">??</span> servers watching <span id="membersCount">??</span> members.</p>
     </div>
 
     <script>
@@ -109,11 +109,26 @@
             xhr.send();
         }
 
-        // Update count every 5 seconds
-        setInterval(getServersCount, 5000);
+        function getMembersCount() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://147.185.221.20:1179/get_members_count', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('membersCount').innerText = xhr.responseText;
+                }
+            };
+            xhr.send();
+        }
 
-        // Initial call to get count
+        // Update count every 5 seconds
+        setInterval(() => {
+            getServersCount();
+            getMembersCount();
+        }, 5000);
+
+        // Initial call to get counts
         getServersCount();
+        getMembersCount();
 
         document.addEventListener('DOMContentLoaded', function() {
             const btnInvite = document.getElementById('btn-invite');
